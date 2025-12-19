@@ -1,0 +1,23 @@
+# Testing dependencies
+pytest>=8.0.0
+pytest-cov>=4.1.0
+pytest-mock>=3.12.0
+moto>=5.0.0
+
+# Linting and formatting
+ruff>=0.4.0
+mypy>=1.10.0
+black>=24.0.0
+isort>=5.13.0
+
+# Type stubs
+boto3-stubs[dynamodb,s3]>=1.35.0
+types-requests>=2.32.0
+
+# Runtime dependencies (shared)
+boto3>=1.35.0
+requests>=2.32.0
+
+# JWT for authorizer testing
+PyJWT>=2.8.0
+cryptography>=41.0.0

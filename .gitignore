@@ -1,0 +1,67 @@
+# Dependencies
+node_modules/
+.npm
+
+# Build outputs
+dist/
+*.js
+!jest.config.js
+!eslint.config.mjs
+*.d.ts
+
+# CDK
+cdk.out/
+.cdk.staging/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Test coverage
+coverage/
+.nyc_output/
+htmlcov/
+
+# Environment variables
+.env
+.env.*
+!.env.example
+
+# Logs
+*.log
+npm-debug.log*
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.Python
+build/
+develop-eggs/
+eggs/
+.eggs/
+*.egg-info/
+*.egg
+
+# Virtual environments
+venv/
+.venv/
+ENV/
+
+# AWS
+.aws-sam/
+
+# Python linting/testing (wattsup-app)
+.ruff_cache/
+.pytest_cache/
+.mypy_cache/
+.coverage
+
+# Node linting/testing (cloud-infra)
+.eslintcache
