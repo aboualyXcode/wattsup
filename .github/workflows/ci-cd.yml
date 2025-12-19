@@ -1,4 +1,4 @@
-name: CI
+name: DEV CI/CD Pipeline
 
 on:
   push:
@@ -21,16 +21,16 @@ jobs:
           python-version: '3.12'
 
       - name: Install dependencies
-        run: make install
+        run: |
+          make install-python
+          make install-node
 
-      - name: Lint Python
-        run: make lint-python
+      - name: Lint
+        run: |
+          make lint-python
+          make lint-node
 
-      - name: Lint Node
-        run: make lint-node
-
-      - name: Test Python
-        run: make test-python
-
-      - name: Test Node
-        run: make test-node
+      - name: Test
+        run: |
+          make test-python
+          make test-node
