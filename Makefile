@@ -43,4 +43,4 @@ clean:
 	rm -rf wattsup-app/__pycache__ wattsup-app/*/__pycache__
 	rm -rf wattsup-app/.pytest_cache wattsup-app/.ruff_cache
 	rm -rf cloud-infra/node_modules cloud-infra/cdk.out
-	find cloud-infra -name "*.js" -o -name "*.d.ts" | xargs rm -f 2>/dev/null || true
+	find cloud-infra -name "*.js" -o -name "*.d.ts" -delete 2>/dev/null || true
