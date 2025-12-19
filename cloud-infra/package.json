@@ -1,0 +1,48 @@
+{
+  "name": "wattsup",
+  "version": "0.1.0",
+  "description": "AWS CDK Infrastructure for WattsUp Energy Monitoring Platform",
+  "bin": {
+    "wattsup": "bin/wattsup.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc -w",
+    "test": "jest",
+    "test:coverage": "jest --coverage",
+    "cdk": "cdk",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "synth": "cdk synth",
+    "deploy": "cdk deploy --all",
+    "destroy": "cdk destroy --all"
+  },
+  "keywords": [
+    "aws",
+    "cdk",
+    "serverless",
+    "lambda",
+    "stepfunctions",
+    "energy",
+    "auction"
+  ],
+  "author": "Mahmoud Aboualy",
+  "license": "CC-BY-NC-4.0",
+  "devDependencies": {
+    "@eslint/js": "^9.0.0",
+    "@types/jest": "^29.5.14",
+    "@types/node": "^24.10.1",
+    "eslint": "^9.0.0",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.2.5",
+    "aws-cdk": "2.1100.1",
+    "ts-node": "^10.9.2",
+    "typescript": "~5.9.3",
+    "typescript-eslint": "^8.0.0"
+  },
+  "dependencies": {
+    "aws-cdk-lib": "2.232.1",
+    "constructs": "^10.0.0",
+    "source-map-support": "^0.5.21"
+  }
+}
