@@ -48,7 +48,6 @@ export class EntrixInfrastructureStack extends cdk.Stack {
     });
 
     // Reference the Slack webhook secret (must be created manually in Secrets Manager)
-    // Create it with: aws secretsmanager create-secret --name entrix/slack-webhook-dev --secret-string "https://hooks.slack.com/services/..."
     const slackWebhookSecret = secretsmanager.Secret.fromSecretNameV2(
       this,
       'SlackWebhookSecret',
@@ -60,36 +59,36 @@ export class EntrixInfrastructureStack extends cdk.Stack {
       runtime: lambda.Runtime.PYTHON_3_12,
       handler: 'index.handler',
       code: lambda.Code.fromInline(`
-      import json
-      import urllib.request
-      import boto3
-      import os
+import json
+import urllib.request
+import boto3
+import os
 
-      def get_slack_webhook():
-          client = boto3.client('secretsmanager')
-          response = client.get_secret_value(SecretId=os.environ['SLACK_WEBHOOK_SECRET_NAME'])
-          return response['SecretString']
+def get_slack_webhook():
+    client = boto3.client('secretsmanager')
+    response = client.get_secret_value(SecretId=os.environ['SLACK_WEBHOOK_SECRET_NAME'])
+    return response['SecretString']
 
-      def handler(event, context):
-          slack_webhook = get_slack_webhook()
-          
-          for record in event.get("Records", []):
-              sns_message = record.get("Sns", {})
-              subject = sns_message.get("Subject", "Alert")
-              message = sns_message.get("Message", "")
-              
-              try:
-                  msg_data = json.loads(message)
-                  text = f"*{subject}*\\n" + "\\n".join(f"• {k}: {v}" for k, v in msg_data.items())
-              except:
-                  text = f"*{subject}*\\n{message}"
-              
-              payload = json.dumps({"text": text}).encode("utf-8")
-              req = urllib.request.Request(slack_webhook, data=payload, headers={"Content-Type": "application/json"})
-              urllib.request.urlopen(req)
-          
-          return {"statusCode": 200}
-            `),
+def handler(event, context):
+    slack_webhook = get_slack_webhook()
+    
+    for record in event.get("Records", []):
+        sns_message = record.get("Sns", {})
+        subject = sns_message.get("Subject", "Alert")
+        message = sns_message.get("Message", "")
+        
+        try:
+            msg_data = json.loads(message)
+            text = f"*{subject}*\\n" + "\\n".join(f"• {k}: {v}" for k, v in msg_data.items())
+        except:
+            text = f"*{subject}*\\n{message}"
+        
+        payload = json.dumps({"text": text}).encode("utf-8")
+        req = urllib.request.Request(slack_webhook, data=payload, headers={"Content-Type": "application/json"})
+        urllib.request.urlopen(req)
+    
+    return {"statusCode": 200}
+      `),
       timeout: cdk.Duration.seconds(10),
       logGroup: slackNotifierLogGroup,
       environment: {
@@ -384,7 +383,7 @@ export class EntrixInfrastructureStack extends cdk.Stack {
       message: sfn.TaskInput.fromObject({
         error: 'Lambda B processing failed',
         details: sfn.JsonPath.stringAt('$.error'),
-        cause: sfn.JsonPath.stringAt('$.cause'),
+        cause: sfn.JsonPath.stringAt('$.error.Cause'),
         timestamp: sfn.JsonPath.stringAt('$$.State.EnteredTime'),
         executionId: sfn.JsonPath.stringAt('$$.Execution.Id'),
       }),
